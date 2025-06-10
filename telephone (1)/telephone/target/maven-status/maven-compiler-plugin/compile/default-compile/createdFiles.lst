@@ -1,0 +1,9 @@
+com\telephone\services\SmartPhoneService.class
+com\telephone\controllers\SmartPhoneController.class
+com\telephone\entities\Employer.class
+com\telephone\enums\Phone_Type.class
+com\telephone\repositories\SmartPhoneRepository.class
+com\telephone\entities\SmartPhone.class
+com\telephone\entities\Client.class
+com\telephone\TelephoneApplication.class
+com\telephone\controllers\rest\SmartPhoneRestController.class

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete SmartPhone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+        background-color: #f8fafc;
+        color: #1e293b;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Container Styles */
+    .container {
+        max-width: 600px;
+        width: 100%;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Header Styles */
+    h2 {
+        color: #991b1b;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #ef4444, #dc2626);
+        border-radius: 2px;
+    }
+
+    /* Warning Box */
+    .warning-box {
+        background-color: #fef2f2;
+        border-left: 4px solid #ef4444;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 0.25rem;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .warning-icon {
+        color: #ef4444;
+        font-size: 1.5rem;
+    }
+
+    /* Phone Details */
+    .phone-details {
+        margin-bottom: 2rem;
+    }
+
+    .detail-row {
+        display: flex;
+        margin-bottom: 0.75rem;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        width: 120px;
+        color: #64748b;
+    }
+
+    .detail-value {
+        flex: 1;
+    }
+
+    /* Button Container */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    /* Button Styles */
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        background-color: #dc2626;
+        color: white;
+        box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2), 0 2px 4px -1px rgba(220, 38, 38, 0.06);
+    }
+
+    .btn-delete:hover {
+        background-color: #b91c1c;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.3), 0 4px 6px -2px rgba(220, 38, 38, 0.1);
+    }
+
+    .btn-cancel {
+        background-color: #e2e8f0;
+        color: #1e293b;
+    }
+
+    .btn-cancel:hover {
+        background-color: #cbd5e1;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 640px) {
+        .container {
+            padding: 1.5rem;
+            margin: 1rem;
+        }
+
+        .button-container {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Delete SmartPhone</h2>
+
+  <div class="warning-box">
+    <div class="warning-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <div>
+      <h3>Warning!</h3>
+      <p>Are you sure you want to delete this smartphone? This action cannot be undone.</p>
+    </div>
+  </div>
+
+  <div class="phone-details">
+    <div class="detail-row">
+      <div class="detail-label">ID:</div>
+      <div class="detail-value" th:text="${smartphone.id}">123</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Phone Number:</div>
+      <div class="detail-value" th:text="${smartphone.phoneNumber}">+1234567890</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Type:</div>
+      <div class="detail-value" th:text="${smartphone.phoneType}">iPhone 13</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Capacity:</div>
+      <div class="detail-value" th:text="${smartphone.capacity}">128GB</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Price:</div>
+      <div class="detail-value" th:text="${'$' + smartphone.price}">$999</div>
+    </div>
+  </div>
+
+  <form th:action="@{/delete/{id}(id=${smartphone.id})}" method="post">
+    <div class="button-container">
+      <button type="submit" class="btn btn-delete">
+        <i class="fas fa-trash-alt"></i> Confirm Delete
+      </button>
+      <a th:href="@{/}" class="btn btn-cancel">
+        <i class="fas fa-times"></i> Cancel
+      </a>
+    </div>
+  </form>
+</div>
+</body>
+</html>
